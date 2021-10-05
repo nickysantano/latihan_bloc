@@ -9,8 +9,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Coba Bloc"),
       ),
-      body: BlocBuilder<ColorBloc, Color>(
-        builder: (context, mycolor){
+      body: BlocBuilder<ColorsBloc, ColorsState>(
+        builder: (context, state){
           return Container(
             alignment: Alignment.center,
             child: Column(
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
                 Text(
                   "Changing Text",
                   style: TextStyle(
-                    color: mycolor,
+                    color: (state is ColorsValue) ? state.value : Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -28,9 +28,7 @@ class HomePage extends StatelessWidget {
         
                 ElevatedButton(
                   onPressed: (){
-                    mycolor == Colors.black ?
-                    context.read<ColorBloc>().add(ColorEvent.red):
-                    context.read<ColorBloc>().add(ColorEvent.black) ;
+                    context.read<ColorsBloc>().add(ChangeColor()) ;
                   }, 
                   child: const Text("Click Me")
                 ),
